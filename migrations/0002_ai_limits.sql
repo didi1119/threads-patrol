@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS ai_calls(id TEXT PRIMARY KEY, candidate_id TEXT NOT NULL, at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS ai_calls_at ON ai_calls(at);
+CREATE TABLE IF NOT EXISTS ai_locks(candidate_id TEXT PRIMARY KEY, expires_at INTEGER NOT NULL);

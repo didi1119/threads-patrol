@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "threads-patrol-scout-spike",
+  "main": "src/cloudflare-worker.ts",
+  "compatibility_date": "2026-09-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "SCOUT_INGEST_URL": "https://threads-patrol-workbench.kobeyoga.workers.dev/api/ingest"
+  },
+  "services": [{ "binding": "PATROL_WORKBENCH", "service": "threads-patrol-workbench" }],
+  "browser": {
+    "binding": "BROWSER"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "SCOUT_COORDINATOR",
+        "class_name": "ScoutCoordinatorDurableObject"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["ScoutCoordinatorDurableObject"]
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "0,30 0,4,9,14 * * *"
+    ]
+  }
+}
